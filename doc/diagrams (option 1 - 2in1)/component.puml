@@ -1,0 +1,25 @@
+@startuml
+
+package "Streamlit Web App" {
+    [Web Interface] as UI
+    [Streamlit Server] as Server
+}
+
+package "Azure Cloud Services" {
+    [Azure Blob Storage] as Blob
+    [Azure Document Intelligence] as DocAI
+}
+
+database "Receipt Images" as Receipts
+
+User -down-> UI : Uploads receipt image
+UI -down-> Server : Sends image data
+Server -down-> Blob : Stores image
+Blob -up-> Server : Returns storage URL
+Server -down-> DocAI : Requests OCR
+DocAI -right-> Blob : Accesses stored image
+DocAI -up-> Server : Returns extracted data
+Server -up-> UI : Sends results to user
+UI -up-> User : Displays results
+
+@enduml

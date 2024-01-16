@@ -1,0 +1,15 @@
+@startuml
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/Web/AzureWebApp.puml
+!includeurl AzurePuml/AIMachineLearning/all.puml
+
+!define RECTANGLE(x) class x << (R,#ADD1B2) >>
+
+node "Azure" {
+    [Web App] <<AzureWebAppService>>
+    [Document Intelligence] <<AzureCognitiveServices>>
+}
+
+[User] --> [Web App] : Uses
+[Web App] --> [Document Intelligence] : Sends Image\nReceives Data
+@enduml

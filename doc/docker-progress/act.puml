@@ -1,0 +1,35 @@
+@startuml
+title Streamlit Web App Deployment to Azure
+
+start
+:Develop Streamlit App;
+
+note right: Code and test Streamlit application locally
+
+:Create Dockerfile;
+note right: Specify base image, dependencies, and command to run Streamlit
+
+:Build Docker Image;
+note right: Use Dockerfile to build image
+
+:Test Docker Image Locally;
+note right: Ensure app runs inside container
+
+:Push Docker Image to Registry;
+note right: Use Azure Container Registry or Docker Hub
+
+:Create Azure Resources;
+note right: Set up services like Azure App Service or Azure Kubernetes Service
+
+:Configure Azure Deployment;
+note right: Set environment variables, configure ports, and other settings
+
+:Deploy Docker Image to Azure;
+note right: Pull image from registry and deploy to Azure service
+
+:Monitor and Manage;
+note right: Check logs, performance, and update settings as necessary
+
+stop
+
+@enduml

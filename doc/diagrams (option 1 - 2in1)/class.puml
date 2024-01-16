@@ -1,0 +1,41 @@
+@startuml
+
+package "Streamlit Web App" {
+    class WebApp {
+        +start()
+    }
+    
+    class ImageUploader {
+        +uploadImage()
+        +getImage()
+    }
+    
+    WebApp --> ImageUploader : uses
+}
+
+package "Azure Function App" {
+    class ReceiptScanner {
+        +scanImage(image)
+    }
+
+    class AzureService {
+        +processImage(image)
+        +getResult()
+    }
+
+    class ScanResult {
+        -text: string
+        -date: string
+        -total: float
+        +getText()
+        +getDate()
+        +getTotal()
+    }
+
+    ReceiptScanner --> AzureService : uses
+    ReceiptScanner --> ScanResult : creates
+}
+
+ImageUploader ..> AzureService : sends image to
+
+@enduml

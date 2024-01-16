@@ -1,0 +1,11 @@
+@startuml
+actor User
+rectangle "Streamlit Web App" as WebApp
+database "Azure Blob Storage" as BlobStorage
+
+User -> WebApp : Uploads receipt image
+WebApp -> BlobStorage : Saves receipt image
+BlobStorage -> WebApp : Returns image URL
+WebApp -> User : Displays result output
+
+@enduml
