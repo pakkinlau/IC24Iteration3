@@ -1,0 +1,19 @@
+@startuml
+
+package "Streamlit Web App Deployment" {
+    class StreamlitWebApp {
+        +upload_image()
+        +display_results()
+    }
+}
+
+package "Azure Blob Storage Function App Deployment" {
+    class AzureBlobStorage {
+        +upload_blob(blob)
+        +download_blob(blob_name)
+    }
+}
+
+StreamlitWebApp --> AzureBlobStorage : uses >
+
+@enduml

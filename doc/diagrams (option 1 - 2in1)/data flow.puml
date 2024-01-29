@@ -1,0 +1,11 @@
+@startuml
+actor User as user
+rectangle "Streamlit Web Interface" as web_interface
+rectangle "Azure Document Intelligence" as azure_doc_int
+
+user -> web_interface : Uploads receipt image
+web_interface -> azure_doc_int : Sends image for processing
+azure_doc_int -> web_interface : Returns scanned data
+web_interface -> user : Displays results
+
+@enduml

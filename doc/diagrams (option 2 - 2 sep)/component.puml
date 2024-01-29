@@ -1,0 +1,30 @@
+@startuml
+
+!define RECTANGLE component
+
+skinparam componentStyle rectangle
+
+package "Streamlit Web App" {
+    [Web Interface] as WI
+    RECTANGLE "Streamlit\nServer" as StreamlitServer {
+        [Upload Image] as UploadImg
+        [Display Results] as DisplayResults
+    }
+    WI -right-> StreamlitServer : Interacts with
+}
+
+package "Azure Infrastructure" {
+    [Azure Blob Storage] as ABS
+    folder "Web App Deployment" {
+        [Web App Service] as WAS
+        WAS ..> UploadImg : Uses for\nimage upload
+    }
+    folder "Storage Function App Deployment" {
+        [Storage Function App] as SFA
+        SFA ..> ABS : Interacts with
+    }
+    StreamlitServer -down-> ABS : Stores images
+    ABS -left-> StreamlitServer : Retrieves images
+}
+
+@enduml

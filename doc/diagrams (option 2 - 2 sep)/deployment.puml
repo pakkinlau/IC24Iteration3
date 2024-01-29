@@ -1,0 +1,25 @@
+@startuml "Simple Receipt Scanning Web App Deployment Diagram"
+
+package "Streamlit Web App Folder" {
+  [Streamlit Web App] as Streamlit
+}
+
+package "Azure" {
+  frame "Web App Service" {
+    [Azure Web App] <<PaaS>> as WebApp
+    [Azure App Service Plan] <<PaaS>> as AppServicePlan
+  }
+
+  frame "Blob Storage Service" {
+    [Azure Storage Account] <<PaaS>> as StorageAccount
+    [Blob Storage] <<Storage>> as BlobStorage
+  }
+}
+
+[Streamlit] -down-> [WebApp] : Deploys to
+[WebApp] -right-> [AppServicePlan] : Runs on
+
+[WebApp] -down-> [BlobStorage] : Interacts with\n(Uploads/Downloads)
+[StorageAccount] -left-> [BlobStorage] : Contains
+
+@enduml
