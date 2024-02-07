@@ -1,0 +1,142 @@
+/* General page styles */
+.upload-page {
+  display: flex;
+  flex-direction: column; /* Change to column to stack elements */
+  align-items: center;
+  justify-content: space-between; /* This will push the footer to the bottom */
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+  padding-top: 20px; /* Add some space on top */
+}
+
+.row-layout {
+  flex-direction: column; /* Update this as well if needed */
+}
+
+.centered-content {
+  flex-grow: 1; /* This will make the centered content grow and push the footer down */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+}
+
+/* Search bar styles */
+.search-bar-container {
+  margin-bottom: 20px; /* Add some space below the search bar */
+}
+
+.search-bar-container input[type="text"] {
+  width: 80%; /* Match the width of the PDF preview for alignment */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Recent files list styles */
+.recent-files-container {
+  width: 80%; /* Match the width of the PDF preview for alignment */
+  margin-bottom: 20px; /* Add some space below the recent files */
+  background: #f8f8f8; /* Light background for the container */
+  border-radius: 4px;
+  padding: 10px;
+  box-sizing: border-box;
+  max-height: 100px; /* Set a max height with overflow for long lists */
+  overflow-y: auto;
+}
+
+.recent-file-item {
+  padding: 5px 0; /* Add some padding to each item */
+}
+
+/* Availability styles */
+.availability-container {
+  text-align: center; /* Center the footer content */
+  padding: 20px;
+  /* Position it at the bottom */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.availability-container span {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 4px;
+  margin: 0 10px; /* Adds horizontal spacing between the spans */
+  display: inline-block; /* This will ensure the margin is applied correctly */
+}
+
+/* PDF preview and button container styles */
+.pdf-preview-container {
+  width: 80%;
+  height: calc(100vh - 200px); /* Adjust height based on new elements */
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Styles for the preview page layout */
+.preview-page {
+  display: flex;
+  justify-content: space-evenly; 
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.pdf-preview-container {
+  width: 100%;
+  height: auto;
+}
+
+.submit-button-container {
+  width: 20%; /* Match the width of the PDF preview for alignment */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: auto;
+  margin-top: 20px;
+}
+
+/* File input label styles */
+.file-input-label {
+  width: 80%; /* Match the width of the PDF preview for alignment */
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin-bottom: 20px; /* Add some space below the label */
+}
+
+/* Additional styles */
+.drop-text {
+  margin-top: 15px;
+}
+
+/* Loading Screen and Data Display Page */
+.loading-screen, .data-display-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 24px;
+}
+
