@@ -50,10 +50,7 @@
     "@babel/preset-flow": "^7.23.3",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
-    "react-app-rewired": "^2.2.1",
-    "webpack": "^5.90.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "react-app-rewired": "^2.2.1"
   },
   "overrides": {
     "@babel/core": "7.19.6",
