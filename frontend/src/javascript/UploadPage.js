@@ -1,8 +1,9 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import at the top
+import React, { useState } from 'react';
 
-function UploadPage({ onFileChange, searchTerm, handleSearchChange, renderRecentFiles, handleDragOver, handleDrop }) {
-  let navigate = useNavigate(); // Initialize navigate function
+function UploadPage({ searchTerm, handleSearchChange, renderRecentFiles, handleDragOver }) {
+  // State to manage upload status and response data
+  const [uploadStatus, setUploadStatus] = useState('');
+  const [uploadData, setUploadData] = useState(null);
 
   // Function to upload file
   const uploadFile = (file) => {
@@ -17,41 +18,27 @@ function UploadPage({ onFileChange, searchTerm, handleSearchChange, renderRecent
     .then(response => response.json())
     .then(data => {
       console.log('Success:', data);
-      // Navigate to DataDisplayPage with the fetched data
-      navigate('/data-display', { state: { data: data } });
+      setUploadStatus('Upload successful');
+      setUploadData(data);
+      // Here you could potentially update a global state or context with the data
     })
     .catch((error) => {
       console.error('Error:', error);
-      // Handle the error case
-      // Optionally navigate to an error page or display an error message
+      setUploadStatus('Upload failed');
     });
   };
-  // Modify the onFileChange function to call uploadFile
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      uploadFile(file);
-    }
-    if (onFileChange) {
-      onFileChange(event); // Call the original onFileChange if it exists
-    }
-  };
 
-  // Modify the handleDrop function to call uploadFile
-  const handleFileDrop = (event) => {
+  // Combined file change and drop handler
+  const handleFileInput = (event) => {
     event.preventDefault();
-    event.stopPropagation();
-    const file = event.dataTransfer.files[0];
+    const file = event.target.files ? event.target.files[0] : event.dataTransfer.files[0];
     if (file) {
       uploadFile(file);
-    }
-    if (handleDrop) {
-      handleDrop(event); // Call the original handleDrop if it exists
     }
   };
 
   return (
-    <div className="upload-page" onDragOver={handleDragOver} onDrop={handleFileDrop}>
+    <div className="upload-page" onDragOver={handleDragOver} onDrop={handleFileInput}>
       <div className="search-bar-container">
         <input
           type="text"
@@ -65,13 +52,21 @@ function UploadPage({ onFileChange, searchTerm, handleSearchChange, renderRecent
         {renderRecentFiles()}
       </div>
       <div className="centered-content">
-        <label className="file-input-label">
-          <input type="file" accept="application/pdf" onChange={handleFileChange} style={{ display: 'none' }} />
-          Select PDF file
-        </label>
+        <input
+          type="file"
+          accept="application/pdf"
+          onChange={handleFileInput}
+          style={{ display: 'none' }}
+          id="fileInput"
+        />
+        <label htmlFor="fileInput" className="file-input-label">Select PDF file</label>
         <div className="drop-text">or drop PDF here</div>
       </div>
-      {/* Footer at the bottom */}
+      {/* Display upload status */}
+      {uploadStatus && <p>{uploadStatus}</p>}
+      {/* Optionally render uploaded data */}
+      {uploadData && <div><pre>{JSON.stringify(uploadData, null, 2)}</pre></div>}
+      {/* Footer */}
       <footer className="availability-container">
         <span>We're also available on:</span>
         <span>Mobile</span>

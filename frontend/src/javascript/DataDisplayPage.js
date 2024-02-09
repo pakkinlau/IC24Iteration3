@@ -1,17 +1,17 @@
-import React from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation if you're using React Router v5 or v6
+import React, { useEffect } from 'react';
+import { useData } from './DataContext'; 
+
 
 function DataDisplayPage() {
-  const location = useLocation(); // Access location if using React Router
-  const data = location.state?.data; // Get data passed through location state
+  const { data, fetchData } = useData();
+
+  useEffect(() => {
+    fetchData(); // Fetch data when the component mounts
+  }, [fetchData]); // Ensure fetchData doesn't change on every render
 
   // Function to render JSON data
   const renderJsonData = (jsonData) => {
-    return (
-      <pre>
-        {JSON.stringify(jsonData, null, 2)} // Pretty print JSON
-      </pre>
-    );
+    return <pre>{JSON.stringify(jsonData, null, 2)}</pre>; // Pretty print JSON
   };
 
   return (

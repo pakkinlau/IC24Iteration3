@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+
+// pages
 import UploadPage from './javascript/UploadPage';
 import LoadingPage from './javascript/LoadingPage';
 import PreviewPage from './javascript/PreviewPage';
 import DataDisplayPage from './javascript/DataDisplayPage';
+
+import { DataProvider } from './javascript/DataContext';
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -91,33 +95,39 @@ function App() {
     handleFileChange(file);
   }
 
-  // Render components based on the page state
+  // Component rendering based on page state
+  let component;
   switch (page) {
     case 'upload':
-      return (
-        <UploadPage
-          onFileChange={handleFileChange}
-          searchTerm={searchTerm}
-          handleSearchChange={handleSearchChange}
-          renderRecentFiles={renderRecentFiles}
-          handleDragOver={handleDragOver}
-          handleDrop={handleDrop}
-        />
-      );
+      component = <UploadPage
+                    onFileChange={handleFileChange}
+                    searchTerm={searchTerm}
+                    handleSearchChange={handleSearchChange}
+                    renderRecentFiles={renderRecentFiles}
+                    handleDragOver={handleDragOver}
+                    handleDrop={handleDrop} />;
+      break;
     case 'loading':
-      return <LoadingPage />;
+      component = <LoadingPage />;
+      break;
     case 'dataDisplay':
-      return <DataDisplayPage />;
+      component = <DataDisplayPage />;
+      break;
     case 'preview':
-      return (
-        <PreviewPage
-          previewUrl={previewUrl}
-          handleSubmit={handleSubmit}
-        />
-      );
+      component = <PreviewPage
+                    previewUrl={previewUrl}
+                    handleSubmit={handleSubmit} />;
+      break;
     default:
-      return <div>Page not found</div>;
+      component = <div>Page not found</div>;
   }
+
+  // Wrap the rendered component with DataProvider
+  return (
+    <DataProvider>
+      {component}
+    </DataProvider>
+  );
 }
 
 export default App;
