@@ -15,8 +15,10 @@ function DataDisplayPage() {
 
   return (
     <div className="data-display-page">
-      <h1>Analysis Result</h1>
-      {data ? renderJsonData(data) : 'No data to display'}
+      <div class="data-display-header">Analysis Result</div>
+      <div class="data-display-container">
+        {data ? renderJsonData(data) : 'No data to display'}
+      </div>
     </div>
   );
 }

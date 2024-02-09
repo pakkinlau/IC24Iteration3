@@ -77,20 +77,27 @@ function App() {
 
   // Function to upload file
   const uploadFile = (file) => {
-    const url = 'http://127.0.0.1:5000/analyze';
+    const url = 'https://v3pymod.victoriousbush-5ac20e57.southeastasia.azurecontainerapps.io/analyze';
     const formData = new FormData();
     formData.append('document', file);
+
+    setUploadStatus('Uploading...');
 
     fetch(url, {
       method: 'POST',
       body: formData,
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then(data => {
       console.log('Success:', data);
       setUploadStatus('Upload successful');
       setUploadData(data);
-      // Here you could potentially update a global state or context with the data
+      setPage('dataDisplay');
     })
     .catch((error) => {
       console.error('Error:', error);

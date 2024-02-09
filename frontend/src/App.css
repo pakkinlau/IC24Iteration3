@@ -195,3 +195,28 @@
   align-items: center; /* Center the content vertically */
   justify-content: center; /* Center the content horizontally */
 }
+
+/*Data Display Container*/
+.data-display-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.data-display-header {
+  font-size: 24px;
+  font-weight: bold;
+  width: 80%;
+}
+
+.data-display-container {
+  width: 80%; /* Match the width of the PDF preview for alignment */
+  height: 300px; /* Updated height */
+  margin-top: 10px; /* Space above the recent files container */
+  background: #f8f8f8; /* Light background for the container */
+  border-radius: 4px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center the content vertically */
+  justify-content: center; /* Center the content horizontally */
+}
