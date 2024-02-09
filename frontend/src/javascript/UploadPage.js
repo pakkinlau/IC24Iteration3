@@ -1,6 +1,7 @@
 import React from 'react';
 
 function UploadPage({ onFileChange, searchTerm, handleSearchChange, handleDrop, renderRecentFiles, handleDragOver, uploadStatus, uploadData }) {
+  const hasRecentFiles = renderRecentFiles().length > 0;
 
   return (
     <div className="upload-page" onDragOver={handleDragOver} onDrop={handleDrop}>
@@ -13,9 +14,6 @@ function UploadPage({ onFileChange, searchTerm, handleSearchChange, handleDrop, 
           onChange={handleSearchChange}
         />
       </div>
-      <div className="recent-files-container">
-        {renderRecentFiles()}
-      </div>
       <div className="centered-content">
         <label className="file-input-label">
           <input 
@@ -27,6 +25,10 @@ function UploadPage({ onFileChange, searchTerm, handleSearchChange, handleDrop, 
           Select PDF file
         </label>
         <div className="drop-text">or drop PDF here</div>
+      </div>
+      <div className="recent-files-header">Recent files</div>
+      <div className="recent-files-container">
+        {hasRecentFiles ? renderRecentFiles() : <p>No files yet.</p>}
       </div>
       {/* Display upload status */}
       {uploadStatus && <p>{uploadStatus}</p>}

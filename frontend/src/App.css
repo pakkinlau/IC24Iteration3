@@ -1,13 +1,14 @@
 /* General page styles */
 .upload-page {
   display: flex;
-  flex-direction: column; /* Change to column to stack elements */
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* This will push the footer to the bottom */
-  height: 100vh;
+  justify-content: flex-start; /* Align content to the top */
+  height: calc(100vh - 80px); /* Subtract the height of the footer */
   width: 100%;
   text-align: center;
-  padding-top: 20px; /* Add some space on top */
+  padding-top: 20px;
+  padding-bottom: 80px; /* Add padding at the bottom equal to footer's height */
 }
 
 .row-layout {
@@ -53,11 +54,8 @@
 
 /* Availability styles */
 .availability-container {
-  text-align: center; /* Center the footer content */
+  text-align: center;
   padding: 20px;
-  /* Position it at the bottom */
-  position: absolute;
-  bottom: 0;
   width: 100%;
 }
 
@@ -175,4 +173,25 @@
   font-size: 20px; /* Use font-size to scale vector icons */
   color: #ccc; /* Faded gray color */
   pointer-events: none; /* Makes the icon non-interactive */
+}
+
+/* Recent Files */
+.recent-files-header {
+  width: 80%; /* Match the width of the PDF preview for alignment */
+  margin-top: 20px; /* Space above the header */
+  font-size: 24px; /* Size of the header */
+  text-align: left;
+}
+
+.recent-files-container {
+  width: 80%; /* Match the width of the PDF preview for alignment */
+  height: 200px; /* Updated height */
+  margin-top: 10px; /* Space above the recent files container */
+  background: #f8f8f8; /* Light background for the container */
+  border-radius: 4px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center the content vertically */
+  justify-content: center; /* Center the content horizontally */
 }
