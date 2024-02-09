@@ -7,7 +7,9 @@ import LoadingPage from './javascript/LoadingPage';
 import PreviewPage from './javascript/PreviewPage';
 import DataDisplayPage from './javascript/DataDisplayPage';
 
+// api stuffs
 import { DataProvider } from './javascript/DataContext';
+import { uploadFile } from './javascript/UploadPage';
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -77,18 +79,21 @@ function App() {
       return;
     }
     setPage('loading');
+    uploadFile(selectedFile); // upload pdf file before being displayed
     updateRecentFiles({ name: selectedFile.name, url: previewUrl }); // update recent file
     setTimeout(() => { // simulate PDF processing delay
       // clean up the object URL
       URL.revokeObjectURL(previewUrl);
       setPage('dataDisplay');
-    }, 3000); // 3 seconds delay
+    }, 4000); // 4 seconds delay
   }
 
+  // handle drag over
   const handleDragOver = (event) => {
     event.preventDefault(); // prevent default behaviour
   }
 
+  // handle drop
   const handleDrop = (event) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0]; // access the file

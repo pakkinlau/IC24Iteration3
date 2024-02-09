@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function UploadPage({ searchTerm, handleSearchChange, renderRecentFiles, handleDragOver }) {
+function UploadPage({ searchTerm, handleFileChange, handleSearchChange, renderRecentFiles, handleDragOver }) {
   // State to manage upload status and response data
   const [uploadStatus, setUploadStatus] = useState('');
   const [uploadData, setUploadData] = useState(null);
@@ -28,17 +28,8 @@ function UploadPage({ searchTerm, handleSearchChange, renderRecentFiles, handleD
     });
   };
 
-  // Combined file change and drop handler
-  const handleFileInput = (event) => {
-    event.preventDefault();
-    const file = event.target.files ? event.target.files[0] : event.dataTransfer.files[0];
-    if (file) {
-      uploadFile(file);
-    }
-  };
-
   return (
-    <div className="upload-page" onDragOver={handleDragOver} onDrop={handleFileInput}>
+    <div className="upload-page" onDragOver={handleDragOver} onDrop={handleFileChange}>
       <div className="search-bar-container">
         <input
           type="text"
@@ -55,7 +46,7 @@ function UploadPage({ searchTerm, handleSearchChange, renderRecentFiles, handleD
         <input
           type="file"
           accept="application/pdf"
-          onChange={handleFileInput}
+          onChange={handleFileChange}
           style={{ display: 'none' }}
           id="fileInput"
         />
@@ -76,5 +67,7 @@ function UploadPage({ searchTerm, handleSearchChange, renderRecentFiles, handleD
     </div>
   );
 }
+
+export { uploadFile }; // Exporting the uploadFile function
 
 export default UploadPage;

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useData } from './DataContext'; 
 
-
 function DataDisplayPage() {
   const { data, fetchData } = useData();
 
