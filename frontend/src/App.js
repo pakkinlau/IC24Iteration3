@@ -9,7 +9,6 @@ import DataDisplayPage from './javascript/DataDisplayPage';
 
 // api stuffs
 import { DataProvider } from './javascript/DataContext';
-import { uploadFile } from './javascript/UploadPage';
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -17,6 +16,8 @@ function App() {
   const [page, setPage] = useState('upload'); // 'upload', 'loading', 'dataDisplay', 'preview'
   const [searchTerm, setSearchTerm] = useState(' ');
   const [recentFiles, setRecentFiles] = useState([]);
+  const [uploadStatus, setUploadStatus] = useState('');
+  const [uploadData, setUploadData] = useState(null);
 
   useEffect(() => {
     // load recent files from localStorage when the component mounts
@@ -63,6 +64,8 @@ function App() {
       setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
+
+      console.log("Setting page to preview for file:", file.name);
       setPage('preview'); // change to preview state
       updateRecentFiles({ name: file.name, url: url });
     } else {
@@ -70,6 +73,29 @@ function App() {
       setSelectedFile(null);
       setPreviewUrl(null);
     }
+  };
+
+  // Function to upload file
+  const uploadFile = (file) => {
+    const url = 'http://127.0.0.1:5000/analyze';
+    const formData = new FormData();
+    formData.append('document', file);
+
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      setUploadStatus('Upload successful');
+      setUploadData(data);
+      // Here you could potentially update a global state or context with the data
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      setUploadStatus('Upload failed');
+    });
   };
 
   // handle submit button
@@ -103,6 +129,7 @@ function App() {
   // Component rendering based on page state
   let component;
   switch (page) {
+    
     case 'upload':
       component = <UploadPage
                     onFileChange={handleFileChange}
