@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import UploadPage from './javascript/UploadPage';
+import LoadingPage from './javascript/LoadingPage';
+import PreviewPage from './javascript/PreviewPage';
+import DataDisplayPage from './javascript/DataDisplayPage';
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -8,11 +12,6 @@ function App() {
   const [searchTerm, setSearchTerm] = useState(' ');
   const [recentFiles, setRecentFiles] = useState([]);
 
-  // handle search term change
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  }
-
   useEffect(() => {
     // load recent files from localStorage when the component mounts
     const storedFiles = localStorage.getItem('recentFiles');
@@ -20,6 +19,19 @@ function App() {
       setRecentFiles(JSON.parse(storedFiles));
     }
   }, []);
+
+  // handle search term change
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  }
+
+  // after a file is selected or uploaded, update the recent files list
+  const updateRecentFiles = (newFile) => {
+    // You could also check if the file already exists in the list to avoid duplicates
+    setRecentFiles(prevFiles => [newFile, ...prevFiles].slice(0, 5)); // Keep only the last 5 files for example
+    // Optionally save to localStorage
+    localStorage.setItem('recentFiles', JSON.stringify([newFile, ...recentFiles].slice(0, 5)));
+  };
 
   // function to render recent files based on the search term
   const renderRecentFiles = () => {
@@ -31,14 +43,6 @@ function App() {
         </div>
       ));
   };  
-
-  // after a file is selected or uploaded, update the recent files list
-  const updateRecentFiles = (newFile) => {
-    // You could also check if the file already exists in the list to avoid duplicates
-    setRecentFiles(prevFiles => [newFile, ...prevFiles].slice(0, 5)); // Keep only the last 5 files for example
-    // Optionally save to localStorage
-    localStorage.setItem('recentFiles', JSON.stringify([newFile, ...recentFiles].slice(0, 5)));
-  };
 
   // handles input changes and files dropped
   const handleFileChange = (event) => {
@@ -77,10 +81,6 @@ function App() {
     }, 3000); // 3 seconds delay
   }
 
-  if (page == 'loading') {
-    return <div className="loading-screen">Loading...</div>;
-  }
-
   const handleDragOver = (event) => {
     event.preventDefault(); // prevent default behaviour
   }
@@ -91,87 +91,33 @@ function App() {
     handleFileChange(file);
   }
 
-  if (page === 'dataDisplay') {
-    return (
-      <div className="data-display-page">
-        Dataframes will show here
-      </div>
-    );
-  }
-
-  // preview page
-  if (page === 'preview') {
-    return (
-      <div className="preview-page">
-        <div className="pdf-preview-container">
-          {previewUrl && (
-            <object className="pdf-preview" data={previewUrl} type="application/pdf">
-              <p>Your browser does not support PDFs. Please download the PDF to view it: <a href={previewUrl}>Download PDF</a>.</p>
-            </object>
-          )}
-        </div>
-        <div className="submit-button-container">
-          <button className="submit-button" onClick={handleSubmit}>Submit PDF</button>
-        </div>
-      </div>
-    );
-  }
-
-  // Default to upload page
-  return (
-    <div className={`upload-page ${page === 'preview' ? 'row-layout' : ''}`} onDragOver={handleDragOver} onDrop={handleDrop}>
-      {/* Search bar at the top */}
-      <div className="search-bar-container">
-        <input
-          type="text"
-          placeholder="Search recent files..."
-          value={searchTerm}
-          onChange={handleSearchChange}
+  // Render components based on the page state
+  switch (page) {
+    case 'upload':
+      return (
+        <UploadPage
+          onFileChange={handleFileChange}
+          searchTerm={searchTerm}
+          handleSearchChange={handleSearchChange}
+          renderRecentFiles={renderRecentFiles}
+          handleDragOver={handleDragOver}
+          handleDrop={handleDrop}
         />
-      </div>
-      
-      {/* Recent files list, possibly hidden or styled differently */}
-      <div className="recent-files-container">
-        {renderRecentFiles()}
-      </div>
-      
-      {/* Centered content for upload or preview */}
-      <div className="centered-content">
-        {page === 'upload' && (
-          <>
-            <label className="file-input-label">
-              <input type="file" accept="application/pdf" onChange={handleFileChange} style={{ display: 'none' }} />
-              Select PDF file
-            </label>
-            <div className="drop-text">or drop PDF here</div>
-          </>
-        )}
-        {page === 'preview' && (
-          <>
-            <div className="pdf-preview-container">
-              {previewUrl && (
-                <object className="pdf-preview" data={previewUrl} type="application/pdf">
-                  <p>Your browser does not support PDFs. Please download the PDF to view it: <a href={previewUrl}>Download PDF</a>.</p>
-                </object>
-              )}
-            </div>
-            <div className="submit-button-container">
-              <button className="submit-button" onClick={handleSubmit}>Submit</button>
-            </div>
-          </>
-        )}
-      </div>
-      
-      {/* Footer at the bottom */}
-      <footer className="availability-container">
-        <span>We're also available on:</span>
-        <span>Mobile</span>
-        <span>Desktop</span>
-        <span>Chrome</span>
-      </footer>
-    </div>
-  );
-
+      );
+    case 'loading':
+      return <LoadingPage />;
+    case 'dataDisplay':
+      return <DataDisplayPage />;
+    case 'preview':
+      return (
+        <PreviewPage
+          previewUrl={previewUrl}
+          handleSubmit={handleSubmit}
+        />
+      );
+    default:
+      return <div>Page not found</div>;
+  }
 }
 
 export default App;

@@ -140,3 +140,39 @@
   font-size: 24px;
 }
 
+/* Search Bar */
+.search-input::placeholder {
+  color: #ccc; /* Faded gray color for the placeholder */
+  opacity: 1; /* Make sure it's fully visible */
+}
+
+.search-bar-container {
+  position: relative;
+  margin-bottom: 20px; /* Add some space below the search bar */
+  width: 50%; /* Increase width of the search bar */
+}
+
+.search-input {
+  width: 70%; /* Adjust the width as necessary */
+  padding: 10px;
+  padding-left: 40px; /* Make room for the search icon on the left */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23999" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-size: 20px 20px; /* Adjust the size of the icon as necessary */
+  color: #333; /* Color for the text */
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px; /* Position the icon inside the input on the left */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px; /* Use font-size to scale vector icons */
+  color: #ccc; /* Faded gray color */
+  pointer-events: none; /* Makes the icon non-interactive */
+}
