@@ -45,11 +45,18 @@ def analyze_document():
             # Convert DataFrame to JSON
             tables.append(result_df.to_json(orient='split'))
 
-        return jsonify(tables)
+        response = jsonify(tables)
 
     except Exception as e:
         print(e)  # This will print the error to the console
         return jsonify({"error": str(e)}), 500
+    
+    # Add CORS headers
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+    response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
+
+    return response, 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True, port=5000)
+    app.run(host='0.0.0.0', debug=True, port=5001)

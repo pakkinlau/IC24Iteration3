@@ -77,7 +77,7 @@ function App() {
 
   // Function to upload file
   const uploadFile = (file) => {
-    const url = 'https://v3pymod.victoriousbush-5ac20e57.southeastasia.azurecontainerapps.io/analyze';
+    const url = 'http://127.0.0.1:5001/analyze';
     const formData = new FormData();
     formData.append('document', file);
 
@@ -103,7 +103,22 @@ function App() {
       console.error('Error:', error);
       setUploadStatus('Upload failed');
     });
+
+    return (
+      <div>
+        {/* Other components */}
+        <DataDisplayPage data={uploadData} uploadStatus={uploadStatus} />
+      </div>
+    );
   };
+
+  useEffect(() => {
+    console.log(uploadData);
+  }, [uploadData]);
+  
+  useEffect(() => {
+    console.log(uploadStatus);
+  }, [uploadStatus]);
 
   // handle submit button
   const handleSubmit = async () => {
@@ -163,9 +178,9 @@ function App() {
 
   // Wrap the rendered component with DataProvider
   return (
-    <DataProvider>
+    <>
       {component}
-    </DataProvider>
+    </>
   );
 }
 

@@ -14,7 +14,7 @@ export const DataProvider = ({ children }) => {
     formData.append('document', file); // Make sure 'document' matches the name expected by your Flask endpoint
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/analyze', {
+      const response = await fetch('http://127.0.0.1:5001/analyze', {
         method: 'POST',
         body: formData, // Use formData as the request body
         // Don't set Content-Type header; let the browser set it

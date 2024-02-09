@@ -30,10 +30,6 @@ function UploadPage({ onFileChange, searchTerm, handleSearchChange, handleDrop, 
       <div className="recent-files-container">
         {hasRecentFiles ? renderRecentFiles() : <p>No files yet.</p>}
       </div>
-      {/* Display upload status */}
-      {uploadStatus && <p>{uploadStatus}</p>}
-      {/* Optionally render uploaded data */}
-      {uploadData && <div><pre>{JSON.stringify(uploadData, null, 2)}</pre></div>}
       {/* Footer */}
       <footer className="availability-container">
         <span>We're also available on:</span>
